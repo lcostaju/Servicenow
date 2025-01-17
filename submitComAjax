@@ -1,0 +1,21 @@
+function onsubmit() {
+	//GlideAjax onsubmit
+	if (g_scratchpad.checked) {
+		return true;
+	}
+	g_scratchpad._action = g_form.getActionName();
+	var ga = new GlideAjax('meu_ajax');
+	ga.addParam('sysparm_name', 'meu_metodo');
+	ga.addParam('sysparm_parametro', 'parametro')
+	ga.getXMLAnswer(function (answer) {
+		//Exemplo: answer = {sucesso: true}
+		var r = JSON.parse(answer);
+		if (r.sucesso) {
+			g_scratchpad.checked = true;
+			g_form.submit(g_scratchpad._action);
+		} else {
+			return false;
+		}
+	});
+	return false;
+}
